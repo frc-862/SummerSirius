@@ -27,6 +27,10 @@ import org.usfirst.frc862.sirius.subsystems.*;
  */
 public class Robot extends IterativeRobot {
 
+	public Robot() { 
+		// do nothing
+	}
+	
     public Command autonomousCommand;
 
     public static OI oi;
