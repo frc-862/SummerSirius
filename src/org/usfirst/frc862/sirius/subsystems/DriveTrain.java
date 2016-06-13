@@ -65,7 +65,7 @@ public class DriveTrain extends Subsystem {
     	robotDrive.drive(0.0, 0.0);
     }
     
-    public void tankDrive(double left, double right) {
+    public void tankDrive(final double left, final double right) {
     	robotDrive.tankDrive(left, right);
     }
     
