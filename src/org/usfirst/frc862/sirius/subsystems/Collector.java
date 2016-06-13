@@ -50,5 +50,29 @@ public class Collector extends Subsystem {
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());
     }
+    
+    public void collect() {
+    	intake.set(1.0);
+    }
+    
+    public void stop() {
+    	intake.set(0.0);
+    }
+    
+    public void eject() {
+    	intake.set(-1.0);
+    }
+    
+    public boolean hasBoulder() {
+    	return boulderinCollector.get();
+    }
+    
+    public void raiseArm() {
+    	arm.set(DoubleSolenoid.Value.kForward);
+    }
+    
+    public void lowerArm() {
+    	arm.set(DoubleSolenoid.Value.kReverse);
+    }
 }
 
