@@ -16,7 +16,7 @@ import org.usfirst.frc862.sirius.commands.*;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 
@@ -49,6 +49,33 @@ public class Shooter extends Subsystem {
 
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());
+    }
+    
+    public void spinUp() {
+    	rightFly.set(1);
+    	leftFly.set(1);
+    }
+    
+    public void spinStop() {
+    	rightFly.set(0);
+    	leftFly.set(0);
+    }
+
+    public void intake() {
+    	rightFly.set(-0.4);
+    	leftFly.set(-0.4);
+    }
+
+    public void kick() {
+    	kicker.set(Value.kForward);
+    }
+    
+    public void kickBack() {
+    	kicker.set(Value.kReverse);
+    }
+
+    public boolean hasBoulder() {
+    	return beamBreak.get();
     }
 }
 
