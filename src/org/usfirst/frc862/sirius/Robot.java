@@ -37,11 +37,6 @@ public class Robot extends IterativeRobot {
     public static OI oi;
     public Command autonomousCommand;
 
-    public Robot() {
-        // do nothing
-        super();
-    }
-
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -91,7 +86,7 @@ public class Robot extends IterativeRobot {
     }
 
     /**
-     * This function is called periodically during autonomous
+     * This function is called periodically during autonomous.
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();

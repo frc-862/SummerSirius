@@ -10,10 +10,12 @@
 
 package org.usfirst.frc862.sirius;
 
-import org.usfirst.frc862.sirius.commands.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import org.usfirst.frc862.sirius.commands.AutonomousCommand;
+import org.usfirst.frc862.sirius.commands.TeleopDrive;
+
 import edu.wpi.first.wpilibj.Joystick;
-import org.usfirst.frc862.sirius.subsystems.*;
 
 /**
  * This class is the glue that binds the controls on the physical operator
