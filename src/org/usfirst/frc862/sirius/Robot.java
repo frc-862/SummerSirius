@@ -10,12 +10,17 @@
 
 package org.usfirst.frc862.sirius;
 
+import org.usfirst.frc862.sirius.commands.AutonomousCommand;
+import org.usfirst.frc862.sirius.subsystems.Collector;
+import org.usfirst.frc862.sirius.subsystems.DriveTrain;
+import org.usfirst.frc862.sirius.subsystems.Kompressor;
+import org.usfirst.frc862.sirius.subsystems.Pivot;
+import org.usfirst.frc862.sirius.subsystems.Shooter;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import org.usfirst.frc862.sirius.commands.*;
-import org.usfirst.frc862.sirius.subsystems.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
