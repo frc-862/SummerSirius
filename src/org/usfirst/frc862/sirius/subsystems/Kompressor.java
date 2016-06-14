@@ -11,9 +11,8 @@
 package org.usfirst.frc862.sirius.subsystems;
 
 import org.usfirst.frc862.sirius.RobotMap;
-
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.Compressor;
 
 /**
  *

@@ -11,7 +11,6 @@
 package org.usfirst.frc862.sirius.subsystems;
 
 import org.usfirst.frc862.sirius.RobotMap;
-import org.usfirst.frc862.sirius.commands.*;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
