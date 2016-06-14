@@ -36,6 +36,11 @@ public class Pivot extends Subsystem {
 
     private final static double HARD_STOP = 12.0;
 
+    public Pivot() {
+    	// do nothing
+    	super();
+    }
+    
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
