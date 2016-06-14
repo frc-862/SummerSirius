@@ -1,5 +1,5 @@
 /** 
-* Package description to be a part of java-doc
+* A set of commands which drive subsystems to accomplish goals.
 */
 /**
 * @author FRC862

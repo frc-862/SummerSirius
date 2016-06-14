@@ -1,5 +1,5 @@
 /** 
-* Package description to be a part of java-doc
+* A collection of classes to control our robot.
 */
 /**
 * @author FRC862
