@@ -43,7 +43,7 @@ public class TeleopDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.driveTrain.tankDrive(Robot.oi.driverLeft.getRawAxis(0), Robot.oi.driverRight.getRawAxis(0));
+        Robot.driveTrain.tankDrive(Robot.oi.getLeft(), Robot.oi.getRight());
     }
 
     // Make this return true when this Command no longer needs to run execute()

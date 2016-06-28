@@ -13,6 +13,7 @@ package org.usfirst.frc862.sirius.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc862.sirius.Robot;
+import org.usfirst.frc862.sirius.subsystems.Pivot;
 
 /**
  *
@@ -41,7 +42,12 @@ public class ManualPivot extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        switch (Robot.oi.coPilot.getPOV(0)) {
+        System.out.println("POV: " + Robot.oi.coPilot.getPOVCount());
+        System.out.println("POV(): " + Robot.oi.coPilot.getPOV());
+        System.out.println("Btn: " + Robot.oi.coPilot.getButtonCount());
+        System.out.println("Btn(11): " + Robot.oi.coPilot.getRawButton(11));
+        System.out.println("Btn(12): " + Robot.oi.coPilot.getRawButton(12));
+        switch (Robot.oi.coPilot.getPOV()) {
         case 0:
             Robot.pivot.up();
             break;

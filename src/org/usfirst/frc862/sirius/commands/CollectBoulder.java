@@ -52,6 +52,7 @@ public class CollectBoulder extends Command {
         } else {
             breakCount = 0;
         }
+        Robot.collector.collect();
     }
 
     // Make this return true when this Command no longer needs to run execute()

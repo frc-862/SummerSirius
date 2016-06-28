@@ -46,7 +46,7 @@ public class Collector extends Subsystem {
     }
 
     public void collect() {
-        intake.set(1.0);
+        intake.set(-1.0);
     }
 
     public void stop() {
@@ -54,18 +54,22 @@ public class Collector extends Subsystem {
     }
 
     public void eject() {
-        intake.set(-1.0);
+        intake.set(1.0);
     }
 
     public boolean hasBoulder() {
-        return boulderinCollector.get();
+        return !boulderinCollector.get();
     }
 
     public void raiseArm() {
-        arm.set(DoubleSolenoid.Value.kForward);
+        arm.set(DoubleSolenoid.Value.kReverse);
     }
 
     public void lowerArm() {
-        arm.set(DoubleSolenoid.Value.kReverse);
+        arm.set(DoubleSolenoid.Value.kForward);
+    }
+
+    public double getSpeed() {
+        return intake.get();
     }
 }

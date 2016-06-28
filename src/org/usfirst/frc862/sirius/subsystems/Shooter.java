@@ -72,6 +72,6 @@ public class Shooter extends Subsystem {
     }
 
     public boolean hasBoulder() {
-        return beamBreak.get();
+        return !beamBreak.get();
     }
 }
