@@ -36,5 +36,4 @@ local.properties
 *.launch
 
 *~
-sirius.yaml
 sysProps.xml
