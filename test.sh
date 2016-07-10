@@ -4,6 +4,7 @@ if [ ! -f "$JAVA_HOME/bin/javac" ]; then
   echo "JAVA_HOME is not a valid JDK. Please install a JDK and set JAVA_HOME to it"
   echo ""
   echo "JAVA_HOME is currently set to $JAVA_HOME"
+  exit 1
 fi
 
 "$JAVA_HOME/bin/java" -version
