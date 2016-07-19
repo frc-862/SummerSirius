@@ -42,7 +42,7 @@ public class Pivot extends Subsystem {
         }
     }
     
-    // TODO switch to something that uses a primative double key so we don't have to create an object for each get
+    // TODO switch to something that uses a primitive double key so we don't have to create an object for each get
     // Key = angle, value = associated powers
     private NavigableMap<Double, PowerTableValue> powerTable;
     
