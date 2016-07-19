@@ -12,6 +12,7 @@
 package org.usfirst.frc862.sirius.subsystems;
 
 import java.util.Map.Entry;
+import java.util.NavigableMap;
 import java.util.TreeMap;
 
 import org.usfirst.frc862.sirius.RobotMap;
@@ -43,7 +44,7 @@ public class Pivot extends Subsystem {
     
     // TODO switch to something that uses a primative double key so we don't have to create an object for each get
     // Key = angle, value = associated powers
-    private TreeMap<Double, PowerTableValue> powerTable;
+    private NavigableMap<Double, PowerTableValue> powerTable;
     
     public Pivot() {
         powerTable = new TreeMap<>();
@@ -59,6 +60,12 @@ public class Pivot extends Subsystem {
         // find floor/ceiling values
         Entry<Double, PowerTableValue> floor = powerTable.floorEntry(angle);
         Entry<Double, PowerTableValue> ceil = powerTable.ceilingEntry(angle);
+        if(ceil == null) {
+        	ceil = powerTable.lastEntry();
+        }
+        if(floor == null) {
+        	floor = powerTable.firstEntry();
+        }
         
         // Pull angle and values from the ceil and floor
         double floorAngle = floor.getKey();
