@@ -113,7 +113,7 @@ public class RobotMap {
         driveTrainBackAmbientLight = new AnalogInput(1);
         LiveWindow.addSensor("Drive Train", "Back Ambient Light", driveTrainBackAmbientLight);
         
-        pivotAngleEncoder = new Encoder(7, 8, false, EncodingType.k4X);
+        pivotAngleEncoder = new Encoder(8, 7, false, EncodingType.k4X);
         LiveWindow.addSensor("Pivot", "Angle Encoder", pivotAngleEncoder);
         pivotAngleEncoder.setDistancePerPulse(1.0);
         pivotAngleEncoder.setPIDSourceType(PIDSourceType.kRate);
