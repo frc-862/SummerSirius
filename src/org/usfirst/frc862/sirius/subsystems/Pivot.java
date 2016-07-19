@@ -11,18 +11,14 @@
 
 package org.usfirst.frc862.sirius.subsystems;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map.Entry;
+import java.util.TreeMap;
 
 import org.usfirst.frc862.sirius.RobotMap;
-import org.usfirst.frc862.sirius.commands.*;
-import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.VictorSP;
-
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 
@@ -34,53 +30,50 @@ public class Pivot extends Subsystem {
     private static final double ANGLE_EPSILON = 1.0;
 
     class PowerTableValue {
-        public double angle;
         public double up_power;
         public double down_power;
         public double hold_power;
         
-        public PowerTableValue(double a, double u, double d, double h) {
-            angle = a;
+        public PowerTableValue(double u, double d, double h) {
             up_power = u;
             down_power = d;
             hold_power = h;
         }
     }
     
-    public List<PowerTableValue> powerTable;
+    // TODO switch to something that uses a primative double key so we don't have to create an object for each get
+    private TreeMap<Double, PowerTableValue> powerTable;
     
     public Pivot() {
-        powerTable = new ArrayList<>();
+        powerTable = new TreeMap<>();
         
         // TODO externalize to a file and expose to 
         // smart dashboard -- verify list is always sorted
-        powerTable.add(new PowerTableValue(0.0, -0.3, 0.1, -0.2));
-        powerTable.add(new PowerTableValue(10.0, -0.4, 0.1, -0.25));
-        powerTable.add(new PowerTableValue(40.0, -0.5, 0.1, -0.3));
+        powerTable.put(0.0, new PowerTableValue(-0.3, 0.1, -0.2));
+        powerTable.put(10.0, new PowerTableValue(-0.4, 0.1, -0.25));
+        powerTable.put(40.0, new PowerTableValue(-0.5, 0.1, -0.3));
     }
     
     public PowerTableValue getPowerValues(double angle) {
         // find floor/ceiling values
-        PowerTableValue floor = powerTable.get(0);
-        PowerTableValue ceil = powerTable.get(1);
+        Entry<Double, PowerTableValue> floor = powerTable.floorEntry(angle);
+        Entry<Double, PowerTableValue> ceil = powerTable.ceilingEntry(angle);
         
-        for (int i = 0; i < powerTable.size(); ++i) {
-            if (angle < powerTable.get(i).angle) {
-                floor = powerTable.get(i - 1);
-                ceil = powerTable.get(i);
-                break;
-            }
-        }
+        // Pull angle and values from the ceil and floor
+        double floorAngle = floor.getKey();
+        PowerTableValue floorValues = floor.getValue();
+        double ceilAngle = ceil.getKey();
+        PowerTableValue ceilValues = ceil.getValue();
              
         // find position between
-        double distance = ceil.angle - floor.angle;
-        double percent = (angle - floor.angle) / distance;
+        double distance = ceilAngle - floorAngle;
+        double percent = (angle - floorAngle) / distance;
         
         // interpolate to position
-        return new PowerTableValue(angle,
-                interpolate(percent, floor.up_power, ceil.up_power),
-                interpolate(percent, floor.down_power, ceil.down_power),
-                interpolate(percent, floor.hold_power, ceil.hold_power)
+        return new PowerTableValue(
+                interpolate(percent, floorValues.up_power, ceilValues.up_power),
+                interpolate(percent, floorValues.down_power, ceilValues.down_power),
+                interpolate(percent, floorValues.hold_power, ceilValues.hold_power)
                 );
     }
     
