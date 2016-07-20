@@ -53,12 +53,12 @@ public class Shooter extends Subsystem {
     }
 
     public void intake() {
-        flywheelLeft.set(INTAKE_POWER);
+        flywheelLeft.set(-INTAKE_POWER);
         flywheelRight.set(INTAKE_POWER);
     }
 
     public void shootPrep() {
-        flywheelLeft.set(SHOOT_POWER);
+        flywheelLeft.set(-SHOOT_POWER);
         flywheelRight.set(SHOOT_POWER);
     }
 
