@@ -11,8 +11,10 @@
 
 package org.usfirst.frc862.sirius.subsystems;
 
-import org.usfirst.frc862.jlib.collection.DoubleLookupTable;
-import org.usfirst.frc862.jlib.collection.DoubleLookupTable.DoubleValuePair;
+import java.util.Map.Entry;
+import java.util.NavigableMap;
+import java.util.TreeMap;
+
 import org.usfirst.frc862.jlib.math.interp.Interpolator;
 import org.usfirst.frc862.jlib.math.interp.LinearInterpolator;
 import org.usfirst.frc862.sirius.RobotMap;
@@ -46,11 +48,11 @@ public class Pivot extends Subsystem {
     private Interpolator interplator;
 
     // Key = angle, value = associated powers
-    private DoubleLookupTable<PowerTableValue> powerTable;
+    private NavigableMap<Double, PowerTableValue> powerTable;
 
     public Pivot() {
         interplator = new LinearInterpolator();
-        powerTable = new DoubleLookupTable<>(4);
+        powerTable = new TreeMap<>();
 
         // TODO externalize to a file and expose to 
         // smart dashboard -- verify list is always sorted
@@ -63,8 +65,8 @@ public class Pivot extends Subsystem {
 
     public PowerTableValue getPowerValues(double angle) {
         // find floor/ceiling values
-        DoubleValuePair<PowerTableValue> floor = powerTable.floorEntry(angle);
-        DoubleValuePair<PowerTableValue> ceil = powerTable.ceilingEntry(angle);
+        Entry<Double, PowerTableValue> floor = powerTable.floorEntry(angle);
+        Entry<Double, PowerTableValue> ceil = powerTable.ceilingEntry(angle);
         if(ceil == null) {
             ceil = powerTable.lastEntry();
         }
