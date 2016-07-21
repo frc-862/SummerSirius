@@ -57,10 +57,10 @@ public class Robot extends IterativeRobot {
 	    	File configurationFile = new File("/home/lvuser/config.yaml");
 	    	if(!configurationFile.exists()) {
 	    		configurationFile.createNewFile();
-	    		this.configuration = new Configuration(true);
+	    		Robot.configuration = new Configuration(true);
 	    		configuration.serialize(configurationFile);
 	    	} else {
-	    		this.configuration = Configuration.deserialize(configurationFile);
+	    		Robot.configuration = Configuration.deserialize(configurationFile);
 	    	}
     	} catch (IOException ex) {
     		ex.printStackTrace();

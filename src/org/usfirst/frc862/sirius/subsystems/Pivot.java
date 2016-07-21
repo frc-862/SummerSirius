@@ -36,8 +36,8 @@ public class Pivot extends Subsystem {
         public double up_power;
         public double down_power;
         public double hold_power;
-
-        public PowerTableValue() {}
+        
+        public PowerTableValue() {} // Needed for serialization
         
         public PowerTableValue(double a, double u, double d, double h) {
             angle = a;
@@ -54,10 +54,10 @@ public class Pivot extends Subsystem {
 
     public Pivot() {
         interplator = new LinearInterpolator();
-        powerTable = new DoubleLookupTable<>(Robot.configuration.getPivotPowerTable().size());
+        powerTable = new DoubleLookupTable<>(Robot.configuration.pivotPowerTable.length);
 
         // TODO expose to smart dashboard
-        for(PowerTableValue val : Robot.configuration.getPivotPowerTable()) {
+        for(PowerTableValue val : Robot.configuration.pivotPowerTable) {
         	powerTable.put(val.angle, val);
         }
     }
