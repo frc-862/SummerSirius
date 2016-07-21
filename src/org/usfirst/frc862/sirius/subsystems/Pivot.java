@@ -14,6 +14,7 @@ package org.usfirst.frc862.sirius.subsystems;
 import org.usfirst.frc862.jlib.collection.DoubleLookupTable;
 import org.usfirst.frc862.jlib.math.interp.Interpolator;
 import org.usfirst.frc862.jlib.math.interp.LinearInterpolator;
+import org.usfirst.frc862.sirius.Robot;
 import org.usfirst.frc862.sirius.RobotMap;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -30,13 +31,17 @@ public class Pivot extends Subsystem {
 
     private static final double ANGLE_EPSILON = 1.0;
 
-    class PowerTableValue {
+    public static class PowerTableValue {
+    	public double angle;
         public double up_power;
         public double down_power;
         public double hold_power;
 
-        public PowerTableValue(double u, double d, double h) {
-            up_power = u;
+        public PowerTableValue() {}
+        
+        public PowerTableValue(double a, double u, double d, double h) {
+            angle = a;
+        	up_power = u;
             down_power = d;
             hold_power = h;
         }
@@ -49,15 +54,12 @@ public class Pivot extends Subsystem {
 
     public Pivot() {
         interplator = new LinearInterpolator();
-        powerTable = new DoubleLookupTable<>(4);
+        powerTable = new DoubleLookupTable<>(Robot.configuration.getPivotPowerTable().size());
 
-        // TODO externalize to a file and expose to 
-        // smart dashboard -- verify list is always sorted
-        powerTable.put(-180.0, new PowerTableValue(-0.3, 0.15, 0.0));
-        powerTable.put(0.0, new PowerTableValue(-0.3, 0.15, 0.0));
-        powerTable.put(10.0, new PowerTableValue(-0.4, 0.15, -0.25));
-        powerTable.put(40.0, new PowerTableValue(-0.5, 0.15, -0.3));
-        
+        // TODO expose to smart dashboard
+        for(PowerTableValue val : Robot.configuration.getPivotPowerTable()) {
+        	powerTable.put(val.angle, val);
+        }
     }
 
     public PowerTableValue getPowerValues(double angle) {
@@ -79,6 +81,7 @@ public class Pivot extends Subsystem {
 
         // interpolate to position
         return new PowerTableValue(
+        		angle,
                 interplator.interpolate(floorAngle, ceilAngle, angle, 
                         floorValues.up_power, ceilValues.up_power),
                 interplator.interpolate(floorAngle, ceilAngle, angle,

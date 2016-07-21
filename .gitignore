@@ -37,3 +37,6 @@ local.properties
 
 *~
 sysProps.xml
+
+# Robot config file
+config.yaml
