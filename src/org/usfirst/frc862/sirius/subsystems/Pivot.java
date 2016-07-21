@@ -11,8 +11,6 @@
 
 package org.usfirst.frc862.sirius.subsystems;
 
-import java.util.Map.Entry;
-
 import org.usfirst.frc862.jlib.collection.DoubleLookupTable;
 import org.usfirst.frc862.jlib.math.interp.Interpolator;
 import org.usfirst.frc862.jlib.math.interp.LinearInterpolator;
