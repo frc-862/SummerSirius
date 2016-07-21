@@ -15,16 +15,14 @@ import java.util.Map.Entry;
 import java.util.NavigableMap;
 import java.util.TreeMap;
 
+import org.usfirst.frc862.jlib.math.interp.Interpolator;
+import org.usfirst.frc862.jlib.math.interp.LinearInterpolator;
 import org.usfirst.frc862.sirius.RobotMap;
-import org.usfirst.frc862.util.math.interp.Interpolator;
-import org.usfirst.frc862.util.math.interp.LinearInterpolator;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.livewindow.LiveWindowSendable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
