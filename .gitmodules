@@ -1,0 +1,3 @@
+[submodule "Lightning-RoboJavaLib"]
+	path = Lightning-RoboJavaLib
+	url = https://github.com/mstojcevich/Lightning-RoboJavaLib
