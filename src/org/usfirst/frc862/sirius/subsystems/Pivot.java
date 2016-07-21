@@ -45,7 +45,6 @@ public class Pivot extends Subsystem {
 
     private Interpolator interplator;
 
-    // TODO switch to something that uses a primitive double key so we don't have to create an object for each get
     // Key = angle, value = associated powers
     private DoubleLookupTable<PowerTableValue> powerTable;
 
