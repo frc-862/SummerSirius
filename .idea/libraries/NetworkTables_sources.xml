@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="NetworkTables-sources">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/wpi/NetworkTables.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/wpi/WPILib.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/wpi/NetworkTables-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/wpi/WPILib-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
