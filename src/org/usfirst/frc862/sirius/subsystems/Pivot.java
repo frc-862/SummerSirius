@@ -11,20 +11,16 @@
 
 package org.usfirst.frc862.sirius.subsystems;
 
-import java.util.Map.Entry;
-import java.util.NavigableMap;
-import java.util.TreeMap;
-
+import org.usfirst.frc862.jlib.collection.DoubleLookupTable;
+import org.usfirst.frc862.jlib.math.interp.Interpolator;
+import org.usfirst.frc862.jlib.math.interp.LinearInterpolator;
+import org.usfirst.frc862.sirius.Robot;
 import org.usfirst.frc862.sirius.RobotMap;
-import org.usfirst.frc862.util.math.interp.Interpolator;
-import org.usfirst.frc862.util.math.interp.LinearInterpolator;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.livewindow.LiveWindowSendable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
@@ -35,13 +31,17 @@ public class Pivot extends Subsystem {
 
     private static final double ANGLE_EPSILON = 1.0;
 
-    class PowerTableValue {
+    public static class PowerTableValue {
+    	public double angle;
         public double up_power;
         public double down_power;
         public double hold_power;
-
-        public PowerTableValue(double u, double d, double h) {
-            up_power = u;
+        
+        public PowerTableValue() {} // Needed for serialization
+        
+        public PowerTableValue(double a, double u, double d, double h) {
+            angle = a;
+        	up_power = u;
             down_power = d;
             hold_power = h;
         }
@@ -49,27 +49,23 @@ public class Pivot extends Subsystem {
 
     private Interpolator interplator;
 
-    // TODO switch to something that uses a primitive double key so we don't have to create an object for each get
     // Key = angle, value = associated powers
-    private NavigableMap<Double, PowerTableValue> powerTable;
+    private DoubleLookupTable<PowerTableValue> powerTable;
 
     public Pivot() {
         interplator = new LinearInterpolator();
-        powerTable = new TreeMap<>();
+        powerTable = new DoubleLookupTable<>(Robot.configuration.pivotPowerTable.length);
 
-        // TODO externalize to a file and expose to 
-        // smart dashboard -- verify list is always sorted
-        powerTable.put(-180.0, new PowerTableValue(-0.3, 0.15, 0.0));
-        powerTable.put(0.0, new PowerTableValue(-0.3, 0.15, 0.0));
-        powerTable.put(10.0, new PowerTableValue(-0.4, 0.15, -0.25));
-        powerTable.put(40.0, new PowerTableValue(-0.5, 0.15, -0.3));
-        
+        // TODO expose to smart dashboard
+        for(PowerTableValue val : Robot.configuration.pivotPowerTable) {
+        	powerTable.put(val.angle, val);
+        }
     }
 
     public PowerTableValue getPowerValues(double angle) {
         // find floor/ceiling values
-        Entry<Double, PowerTableValue> floor = powerTable.floorEntry(angle);
-        Entry<Double, PowerTableValue> ceil = powerTable.ceilingEntry(angle);
+        DoubleLookupTable<PowerTableValue>.DoubleValuePair floor = powerTable.floorEntry(angle);
+        DoubleLookupTable<PowerTableValue>.DoubleValuePair ceil = powerTable.ceilingEntry(angle);
         if(ceil == null) {
             ceil = powerTable.lastEntry();
         }
@@ -85,6 +81,7 @@ public class Pivot extends Subsystem {
 
         // interpolate to position
         return new PowerTableValue(
+        		angle,
                 interplator.interpolate(floorAngle, ceilAngle, angle, 
                         floorValues.up_power, ceilValues.up_power),
                 interplator.interpolate(floorAngle, ceilAngle, angle,

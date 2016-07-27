@@ -1,4 +1,4 @@
-package org.usfirst.frc862.util.math.interp;
+package org.usfirst.frc862.jlib.math.interp;
 
 /**
  * Interpolator that performs linear interpolation
