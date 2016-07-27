@@ -119,6 +119,14 @@ public class Pivot extends Subsystem {
         // setDefaultCommand(new MySpecialCommand());
     }
 
+    public void checkHardStop() {
+        System.out.printf("We are at %f\n", angleEncoder.getDistance());
+        if (hallEffect.get() == false) {
+            angleEncoder.reset();
+            System.out.println("Reset encoder");
+        }
+    }
+    
     public void moveToAngle(double angle) {
         PowerTableValue val = getPowerValues(angle);
         SmartDashboard.putNumber("Going to angle", angle);
@@ -158,5 +166,9 @@ public class Pivot extends Subsystem {
 
     public void resetAngleEncoder() {
         angleEncoder.reset();
+    }
+
+    public boolean atHardStop() {
+        return (hallEffect.get() == false);
     }
 }

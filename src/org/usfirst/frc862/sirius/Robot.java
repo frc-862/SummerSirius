@@ -75,6 +75,7 @@ public class Robot extends IterativeRobot {
     }
 
     public void disabledPeriodic() {
+        generalPeriodic();
         Scheduler.getInstance().run();
     }
 
@@ -87,6 +88,7 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
+        generalPeriodic();
         Scheduler.getInstance().run();
     }
 
@@ -102,6 +104,7 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+        generalPeriodic();
         Scheduler.getInstance().run();
     }
 
@@ -109,6 +112,11 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during test mode
      */
     public void testPeriodic() {
+        generalPeriodic();
         LiveWindow.run();
+    }
+    
+    public void generalPeriodic() {
+        Robot.pivot.checkHardStop();
     }
 }

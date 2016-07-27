@@ -40,12 +40,11 @@ public class PivottoHardstop extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
         setTimeout(2.0);
+        Robot.pivot.setPower(0.15);
     }
 
     // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-        Robot.pivot.moveToAngle(HARDSTOP_ANGLE);
-        
+    protected void execute() {        
         // TODO remove when Hall effect sensor is working
         if (this.isTimedOut()) {
             Robot.pivot.resetAngleEncoder();
@@ -54,7 +53,7 @@ public class PivottoHardstop extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.pivot.atAngle(HARDSTOP_ANGLE);
+        return Robot.pivot.atHardStop();
     }
 
     // Called once after isFinished returns true
