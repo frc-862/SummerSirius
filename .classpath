@@ -4,6 +4,5 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/wpi/NetworkTables.jar" sourcepath="lib/wpi/NetworkTables-sources.jar"/>
 	<classpathentry kind="lib" path="lib/wpi/WPILib.jar" sourcepath="lib/wpi/WPILib-sources.jar"/>
-	<classpathentry kind="lib" path="lib/yaml/snakeyaml-1.16.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

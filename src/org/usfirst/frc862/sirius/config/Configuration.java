@@ -1,10 +1,14 @@
 package org.usfirst.frc862.sirius.config;
 
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Serializable;
 
 import org.usfirst.frc862.sirius.subsystems.Pivot.PowerTableValue;
+import org.yaml.snakeyaml.DumperOptions;
+import org.yaml.snakeyaml.Yaml;
 
 public class Configuration implements Serializable {
 	
@@ -39,24 +43,24 @@ public class Configuration implements Serializable {
 	}
 	
 	public static Configuration deserialize(File file) throws IOException {
-		// Yaml yaml = new Yaml();
+		Yaml yaml = new Yaml();
 		
-		// FileReader fr = new FileReader(file);
-		// Configuration config = yaml.loadAs(fr, Configuration.class);
-		// fr.close();
+		FileReader fr = new FileReader(file);
+		Configuration config = yaml.loadAs(fr, Configuration.class);
+		fr.close();
 		
-		return new Configuration(true);
+		return config;
 	}
 	
 	public void serialize(File file) throws IOException {
-//		DumperOptions options = new DumperOptions();
-//		options.setDefaultFlowStyle(DumperOptions.FlowStyle.FLOW);
-//		options.setPrettyFlow(true);
-//		Yaml yaml = new Yaml(options);
-//		
-//		FileWriter fw = new FileWriter(file);
-//		yaml.dump(this, fw);
-//		fw.close();
+		DumperOptions options = new DumperOptions();
+		options.setDefaultFlowStyle(DumperOptions.FlowStyle.FLOW);
+		options.setPrettyFlow(true);
+		Yaml yaml = new Yaml(options);
+		
+		FileWriter fw = new FileWriter(file);
+		yaml.dump(this, fw);
+		fw.close();
 	}
 
 }
