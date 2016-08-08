@@ -51,6 +51,7 @@ public class RobotMap {
     public static Encoder driveTrainRightEncoder;
     public static AnalogInput driveTrainFrontAmbientLight;
     public static AnalogInput driveTrainBackAmbientLight;
+    public static DoubleSolenoid driveTrainShifter;
     public static Encoder pivotAngleEncoder;
     public static SpeedController pivotAngleMotor;
     public static DigitalInput pivotHallEffect;
@@ -99,7 +100,10 @@ public class RobotMap {
         driveTrainDriveController.setExpiration(0.1);
         driveTrainDriveController.setSensitivity(0.5);
         driveTrainDriveController.setMaxOutput(1.0);
-
+        driveTrainDriveController.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
+        driveTrainDriveController.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
+        driveTrainDriveController.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
+        driveTrainDriveController.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
         driveTrainLeftEncoder = new Encoder(0, 1, false, EncodingType.k4X);
         LiveWindow.addSensor("Drive Train", "Left Encoder ", driveTrainLeftEncoder);
         driveTrainLeftEncoder.setDistancePerPulse(1.0);
@@ -113,6 +117,9 @@ public class RobotMap {
         
         driveTrainBackAmbientLight = new AnalogInput(1);
         LiveWindow.addSensor("Drive Train", "Back Ambient Light", driveTrainBackAmbientLight);
+        
+        driveTrainShifter = new DoubleSolenoid(11, 5, 4);
+        LiveWindow.addActuator("Drive Train", "Shifter", driveTrainShifter);
         
         pivotAngleEncoder = new Encoder(7, 8, true, EncodingType.k4X);
         LiveWindow.addSensor("Pivot", "Angle Encoder", pivotAngleEncoder);
