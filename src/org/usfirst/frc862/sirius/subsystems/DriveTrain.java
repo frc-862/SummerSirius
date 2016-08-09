@@ -90,6 +90,10 @@ public class DriveTrain extends Subsystem {
             return 0.0;
     }
     
+    public void resetYAW() {
+        ahrs.zeroYaw();
+    }
+    
     public void forwardLeft() {
         leftMotor1.set(speed);
         leftMotor2.set(speed);
@@ -123,5 +127,12 @@ public class DriveTrain extends Subsystem {
 
     public void downShift() {
         shifter.set(Value.kReverse);
+    }
+
+    public void rotate(double speed) {        
+        leftMotor1.set(speed);
+        leftMotor2.set(speed);
+        rightMotor1.set(speed);
+        rightMotor2.set(speed);
     }
 }
