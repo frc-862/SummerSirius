@@ -15,6 +15,8 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.usfirst.frc862.sirius.commands.DoNothing;
 import org.usfirst.frc862.sirius.commands.PivottoHardstop;
 import org.usfirst.frc862.sirius.config.Configuration;
@@ -147,6 +149,7 @@ public class Robot extends IterativeRobot {
     }
 
     public void generalPeriodic() {
+        SmartDashboard.putNumber("At angle", driveTrain.getYAW());
         Robot.pivot.checkHardStop();
     }
 }
