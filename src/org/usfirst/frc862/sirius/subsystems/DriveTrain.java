@@ -84,10 +84,15 @@ public class DriveTrain extends Subsystem {
     }
 
     public double getYAW() {
-        if (ahrs != null)
-            return ahrs.getYaw();
-        else
+        if (ahrs != null) {
+            if (ahrs.isCalibrating()) {
+                return ahrs.getYaw();
+            } else {
+                return ahrs.getFusedHeading();
+            }
+        } else {
             return 0.0;
+        }
     }
     
     public void resetYAW() {
