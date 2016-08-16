@@ -88,7 +88,11 @@ public class DriveTrain extends Subsystem {
             if (ahrs.isCalibrating()) {
                 return ahrs.getYaw();
             } else {
-                return ahrs.getFusedHeading();
+                double yaw = ahrs.getFusedHeading();
+                if (yaw > 180) {
+                    yaw -= 360;
+                }
+                return yaw;
             }
         } else {
             return 0.0;
@@ -140,4 +144,9 @@ public class DriveTrain extends Subsystem {
         rightMotor1.set(speed);
         rightMotor2.set(speed);
     }
+
+    public double getBackAmbientLight() {
+        return backAmbientLight.getVoltage();
+    }
+
 }
