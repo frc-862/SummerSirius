@@ -45,6 +45,10 @@ public class TankDrive extends Command {
         // TODO map control index to config file
         double left = Robot.oi.getGamepad().getRawAxis(1);
         double right = Robot.oi.getGamepad().getRawAxis(3);
+        
+        left = Robot.oi.getLeftJoystick().getRawAxis(1);
+        right = Robot.oi.getRightJoystick().getRawAxis(1);
+        
         Robot.driveTrain.getRobotDrive().tankDrive(left, right);
     }
 
