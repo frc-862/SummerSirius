@@ -10,6 +10,7 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import org.json.JSONObject;
+import org.json.JSONArray;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -48,7 +49,16 @@ public class Vision extends Subsystem {
     }
     
     private static JSONObject httpJSON(String url) {
-        return new JSONObject(httpGET(url));
+        String get = httpGET(url);
+        System.out.println("Vision get");
+        System.out.println(get);
+        
+        JSONArray ja = new JSONArray(get);
+        if (ja.length() > 0) {
+            return ja.getJSONObject(0);
+        }
+        
+        return null;
     }
     
     public double getDistanceToTarget() {
@@ -67,6 +77,7 @@ public class Vision extends Subsystem {
     
     public Vision() {
         super();
+        System.out.println("Start vision");
         rwl = new ReentrantReadWriteLock();
         
         // create a thread here to poll against
@@ -78,12 +89,18 @@ public class Vision extends Subsystem {
 
                 while (true) {
                     try {
-                        JSONObject json = httpJSON("http://vision.local:5801/");
-                
-                        rwl.writeLock().lock();
-                        distance_to_target = json.getDouble("");
-                        theta_to_target = json.getDouble("");
-                        rwl.writeLock().unlock();
+                        JSONObject json = httpJSON("http://vision.local:5801/last_match_data");
+
+                        if (json != null) {
+                            double z = json.getDouble("z");
+                            double x = json.getDouble("x");
+                            double theta = Math.atan2(x, z) * -360 / (2 * Math.PI);
+
+                            rwl.writeLock().lock();
+                            distance_to_target = z;
+                            theta_to_target = theta;
+                            rwl.writeLock().unlock();
+                        }
                         
                         Thread.sleep(500);
                     } catch (InterruptedException e) {
