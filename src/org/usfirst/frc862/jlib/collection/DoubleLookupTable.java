@@ -7,8 +7,9 @@ import java.util.List;
 /**
  * Double-keyed lookup table that supports fastish ceil and floor.
  *
- * Doesn't use generics for the key (double is a very very common case) so boxing isn't a concern.
- * Use a different data structure if you want non-double keys.
+ * Doesn't use generics for the key (double is a very very common case) so
+ * boxing isn't a concern. Use a different data structure if you want non-double
+ * keys.
  */
 public class DoubleLookupTable<V> {
 
@@ -20,7 +21,8 @@ public class DoubleLookupTable<V> {
 
     /**
      *
-     * @param initialInternalSize Initial size of the internal backing array
+     * @param initialInternalSize
+     *            Initial size of the internal backing array
      */
     public DoubleLookupTable(int initialInternalSize) {
         sortedEntries = new ArrayList<>(initialInternalSize);
@@ -48,7 +50,7 @@ public class DoubleLookupTable<V> {
     // O(log n)
     public V get(double key) {
         int idx = getIdx(key);
-        if(idx == -1) {
+        if (idx == -1) {
             return null;
         }
         return sortedEntries.get(idx).getValue();
@@ -56,15 +58,16 @@ public class DoubleLookupTable<V> {
 
     /**
      * Put a value into the lookup table with the specified key
+     * 
      * @return The previous value for the key. Null if no value was replaced.
      */
     // O(log n)
     public V put(double key, V value) {
         int cidx = getCeilIdx(key);
         DoubleValuePair e;
-        if(cidx < sortedEntries.size()) {
+        if (cidx < sortedEntries.size()) {
             e = sortedEntries.get(cidx);
-            if(compare(e.getKey(), key) == 0) {
+            if (compare(e.getKey(), key) == 0) {
                 return e.setValue(value);
             } else {
                 sortedEntries.add(cidx, new DoubleValuePair(key, value));
@@ -74,19 +77,20 @@ public class DoubleLookupTable<V> {
             sortedEntries.add(cidx, new DoubleValuePair(key, value));
             return null;
         }
-
     }
 
     /**
-     * Remove the entry corresponding to the key if present.
-     * If exists, removes and returns the removed value; if not, returns null and does nothing.
-     * @return null if no value existed with key, otherwise the previous associated value
+     * Remove the entry corresponding to the key if present. If exists, removes
+     * and returns the removed value; if not, returns null and does nothing.
+     * 
+     * @return null if no value existed with key, otherwise the previous
+     *         associated value
      */
     // O(log n)
     public V remove(double key) {
         int idx = getIdx(key);
 
-        if(idx == -1) {
+        if (idx == -1) {
             return null;
         }
 
@@ -94,7 +98,8 @@ public class DoubleLookupTable<V> {
         return e.getValue();
     }
 
-    public Iterable<Double> keySet() { // TODO make our own DoubleIterator to avoid boxing
+    public Iterable<Double> keySet() { // TODO make our own DoubleIterator to
+                                       // avoid boxing
         return () -> new Iterator<Double>() {
             private Iterator<DoubleValuePair> entries = entrySet().iterator();
 
@@ -110,7 +115,7 @@ public class DoubleLookupTable<V> {
             }
         };
     }
-    
+
     public Iterable<V> values() {
         return () -> new Iterator<V>() {
             private Iterator<DoubleValuePair> entries = entrySet().iterator();
@@ -137,7 +142,7 @@ public class DoubleLookupTable<V> {
      */
     // O(1)
     public DoubleValuePair firstEntry() {
-        if(isEmpty())
+        if (isEmpty())
             return null;
 
         return sortedEntries.get(0);
@@ -148,7 +153,7 @@ public class DoubleLookupTable<V> {
      */
     // O(1)
     public DoubleValuePair lastEntry() {
-        if(isEmpty())
+        if (isEmpty())
             return null;
 
         return sortedEntries.get(sortedEntries.size() - 1);
@@ -162,7 +167,7 @@ public class DoubleLookupTable<V> {
     // O(log n)
     public DoubleValuePair ceilingEntry(double key) {
         int idx = getCeilIdx(key);
-        if(idx >= sortedEntries.size()) {
+        if (idx >= sortedEntries.size()) {
             return null;
         } else {
             return sortedEntries.get(idx);
@@ -177,7 +182,7 @@ public class DoubleLookupTable<V> {
     // O(log n)
     public DoubleValuePair floorEntry(double key) {
         int idx = getFloorIdx(key);
-        if(idx < 0) {
+        if (idx < 0) {
             return null;
         } else {
             return sortedEntries.get(idx);
@@ -185,7 +190,8 @@ public class DoubleLookupTable<V> {
     }
 
     /**
-     * Return the entry with the closest key less than (not equal to) the given key
+     * Return the entry with the closest key less than (not equal to) the given
+     * key
      *
      * @return Lower entry if exists, otherwise null
      */
@@ -193,7 +199,7 @@ public class DoubleLookupTable<V> {
     public DoubleValuePair lowerEntry(double key) {
         int idx = getLowerIdx(key);
 
-        if(idx < 0) {
+        if (idx < 0) {
             return null;
         } else {
             return sortedEntries.get(idx);
@@ -201,7 +207,8 @@ public class DoubleLookupTable<V> {
     }
 
     /**
-     * Return the entry with the closest key greater than (not equal to) the given key
+     * Return the entry with the closest key greater than (not equal to) the
+     * given key
      *
      * @return Lower entry if exists, otherwise null
      */
@@ -209,7 +216,7 @@ public class DoubleLookupTable<V> {
     public DoubleValuePair higherEntry(double key) {
         int idx = getHigherIdx(key);
 
-        if(idx >= sortedEntries.size()) {
+        if (idx >= sortedEntries.size()) {
             return null;
         } else {
             return sortedEntries.get(idx);
@@ -218,19 +225,20 @@ public class DoubleLookupTable<V> {
 
     /**
      * Get the index associated with the specified key
+     * 
      * @return -1 if not found, otherwise associated index
      */
     private int getIdx(double key) {
         int imin = 0;
         int imax = sortedEntries.size() - 1;
 
-        while(imin <= imax) {
+        while (imin <= imax) {
             int imid = (imin + imax) / 2;
 
             double cmp = compare(sortedEntries.get(imid).getKey(), key);
-            if(cmp == 0) {
+            if (cmp == 0) {
                 return imid;
-            } else if(cmp < 0) {
+            } else if (cmp < 0) {
                 imin = imid + 1;
             } else {
                 imax = imid - 1;
@@ -242,19 +250,20 @@ public class DoubleLookupTable<V> {
 
     /**
      * Get the index of the smallest entry greater than the specified key
+     * 
      * @return -1 if not found, otherwise associated index
      */
     private int getHigherIdx(double key) {
         int imin = 0;
         int imax = sortedEntries.size() - 1;
 
-        while(imin <= imax) {
+        while (imin <= imax) {
             int imid = (imin + imax) / 2;
 
             double cmp = compare(sortedEntries.get(imid).getKey(), key);
-            if(cmp == 0) {
+            if (cmp == 0) {
                 return imid + 1;
-            } else if(cmp < 0) {
+            } else if (cmp < 0) {
                 imin = imid + 1;
             } else {
                 imax = imid - 1;
@@ -266,19 +275,20 @@ public class DoubleLookupTable<V> {
 
     /**
      * Get the index of the largest entry less than the specified key
+     * 
      * @return -1 if not found, otherwise associated index
      */
     private int getLowerIdx(double key) {
         int imin = 0;
         int imax = sortedEntries.size() - 1;
 
-        while(imin <= imax) {
+        while (imin <= imax) {
             int imid = (imin + imax) / 2;
 
             double cmp = compare(sortedEntries.get(imid).getKey(), key);
-            if(cmp == 0) {
+            if (cmp == 0) {
                 return imid - 1;
-            } else if(cmp < 0) {
+            } else if (cmp < 0) {
                 imin = imid + 1;
             } else {
                 imax = imid - 1;
@@ -289,20 +299,22 @@ public class DoubleLookupTable<V> {
     }
 
     /**
-     * Get the index of the largest entry less than or equal to the specified key
+     * Get the index of the largest entry less than or equal to the specified
+     * key
+     * 
      * @return -1 if not found, otherwise associated index
      */
     private int getFloorIdx(double key) {
         int imin = 0;
         int imax = sortedEntries.size() - 1;
 
-        while(imin <= imax) {
+        while (imin <= imax) {
             int imid = (imin + imax) / 2;
 
             double cmp = compare(sortedEntries.get(imid).getKey(), key);
-            if(cmp == 0) {
+            if (cmp == 0) {
                 return imid;
-            } else if(cmp < 0) {
+            } else if (cmp < 0) {
                 imin = imid + 1;
             } else {
                 imax = imid - 1;
@@ -313,20 +325,22 @@ public class DoubleLookupTable<V> {
     }
 
     /**
-     * Get the index of the smallest entry greater than or equal to the specified key
+     * Get the index of the smallest entry greater than or equal to the
+     * specified key
+     * 
      * @return -1 if not found, otherwise associated index
      */
     private int getCeilIdx(double key) {
         int imin = 0;
         int imax = sortedEntries.size() - 1;
 
-        while(imin <= imax) {
+        while (imin <= imax) {
             int imid = (imin + imax) / 2;
 
             double cmp = compare(sortedEntries.get(imid).getKey(), key);
-            if(cmp == 0) {
+            if (cmp == 0) {
                 return imid;
-            } else if(cmp < 0) {
+            } else if (cmp < 0) {
                 imin = imid + 1;
             } else {
                 imax = imid - 1;
@@ -360,7 +374,7 @@ public class DoubleLookupTable<V> {
         public V setValue(V v) {
             V tmp = value;
             this.value = v;
-            
+
             return tmp;
         }
     }

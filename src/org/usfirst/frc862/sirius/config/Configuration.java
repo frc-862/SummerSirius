@@ -33,12 +33,14 @@ public class Configuration implements Serializable {
 	public Configuration(boolean sensibleDefaults) {
 		if(sensibleDefaults) {
 			pivotPowerTable = new PowerTableValue[] {
-					new PowerTableValue(-180, -0.3, 0.15, 0.0),
-					new PowerTableValue(0, -0.3, 0.15, 0.0),
-					new PowerTableValue(10, -0.4, 0.15, -0.25),
-					new PowerTableValue(40, -0.5, 0.15, -0.3),
-					new PowerTableValue(180, -0.5, 0.15, -0.3)
+					new PowerTableValue(-180, -0.3, 0.25, 0.0),
+					new PowerTableValue(0, -0.3, 0.25, 0.0),
+					new PowerTableValue(10, -0.4, 0.25, -0.25),
+					new PowerTableValue(40, -0.6, 0.15, -0.3),
+					new PowerTableValue(180, -0.7, 0.15, -0.3)
 			};
+			
+			
 		}
 	}
 	

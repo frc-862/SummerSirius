@@ -32,6 +32,11 @@ public class Pivot extends Subsystem {
 
     private static final double ANGLE_EPSILON = 1.0;
 
+    public static class AngleDistanceTable {
+        public double distance;
+        public double angle;
+    }
+    
     public static class PowerTableValue {
     	public double angle;
         public double up_power;
