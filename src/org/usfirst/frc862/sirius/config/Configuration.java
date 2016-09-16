@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import org.usfirst.frc862.sirius.subsystems.Pivot.PowerTableValue;
+import org.usfirst.frc862.sirius.subsystems.Vision.ThetaDistanceTableValue;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 
@@ -17,6 +18,10 @@ public class Configuration implements Serializable {
 	public PowerTableValue[] pivotPowerTable;
 	
 	public boolean debuggingPivot = false;
+
+    public PowerTableValue[] shooterTable;
+
+    public ThetaDistanceTableValue[] thetaDistanceTable;
 	
 	/**
 	 * Create a configuration with all state being zero or null
@@ -40,7 +45,13 @@ public class Configuration implements Serializable {
 					new PowerTableValue(180, -0.7, 0.15, -0.3)
 			};
 			
-			
+			thetaDistanceTable = new ThetaDistanceTableValue[] {
+                    new ThetaDistanceTableValue(1.8, 42),
+                    new ThetaDistanceTableValue(2.3, 34),
+                    new ThetaDistanceTableValue(2.9, 28),
+                    new ThetaDistanceTableValue(3.5, 25),
+                    new ThetaDistanceTableValue(4.6, 22)
+			};
 		}
 	}
 	

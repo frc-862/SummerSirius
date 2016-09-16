@@ -10,6 +10,10 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import org.json.JSONObject;
+import org.usfirst.frc862.jlib.collection.DoubleLookupTable;
+import org.usfirst.frc862.jlib.math.interp.LinearInterpolator;
+import org.usfirst.frc862.sirius.Robot;
+import org.usfirst.frc862.sirius.subsystems.Pivot.PowerTableValue;
 import org.json.JSONArray;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -23,6 +27,8 @@ public class Vision extends Subsystem {
     private double theta_to_target;
     
     private Thread vthread;
+    private LinearInterpolator interplator;
+    private DoubleLookupTable<ThetaDistanceTableValue> thetaDistanceTable;
     
     private static String httpGET(String urlToRead) {
         try {
@@ -75,8 +81,38 @@ public class Vision extends Subsystem {
         return result;
     }
     
+    public double getInterpolatedPivot() {
+        double dist = getDistanceToTarget();
+        
+        // find floor/ceiling values
+        DoubleLookupTable<ThetaDistanceTableValue>.DoubleValuePair floor = thetaDistanceTable.floorEntry(dist);
+        DoubleLookupTable<ThetaDistanceTableValue>.DoubleValuePair ceil = thetaDistanceTable.ceilingEntry(dist);
+        if (ceil == null) {
+            ceil = thetaDistanceTable.lastEntry();
+        }
+        if (floor == null) {
+            floor = thetaDistanceTable.firstEntry();
+        }
+
+        // Pull angle and values from the ceil and floor
+        double floorDistance = floor.getKey();
+        double floorValue = floor.getValue().theta;
+        double ceilDistance = ceil.getKey();
+        double ceilValue = ceil.getValue().theta;
+
+        // interpolate to position
+        return interplator.interpolate(floorDistance, ceilDistance, dist, floorValue, ceilValue);
+    }
+    
     public Vision() {
         super();
+        
+        interplator = new LinearInterpolator();
+        thetaDistanceTable = new DoubleLookupTable<>(Robot.configuration.thetaDistanceTable.length);
+        for (ThetaDistanceTableValue val : Robot.configuration.thetaDistanceTable) {
+            thetaDistanceTable.put(val.distance, val);
+        }
+
         System.out.println("Start vision");
         rwl = new ReentrantReadWriteLock();
         
@@ -118,6 +154,19 @@ public class Vision extends Subsystem {
     }
     
     public void initDefaultCommand() {
+    }
+    
+    public static class ThetaDistanceTableValue {
+        public double distance;
+        public double theta;
+
+        public ThetaDistanceTableValue() {
+        } // Needed for serialization
+
+        public ThetaDistanceTableValue(double d, double t) {
+            distance = d;
+            theta = t;
+        }
     }
 }
 
