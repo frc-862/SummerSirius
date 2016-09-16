@@ -120,7 +120,6 @@ public class Pivot extends Subsystem {
         // System.out.printf("We are at %f\n", angleEncoder.getDistance());
         if (hallEffect.get() == false) {
             angleEncoder.reset();
-            System.out.println("Reset encoder");
         }
     }
 

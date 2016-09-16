@@ -55,7 +55,7 @@ public class ManualPivotControl extends Command {
         
         SmartDashboard.putNumber("Pivot Angle", Robot.pivot.getAngle());
         SmartDashboard.putNumber("Vision distance", Robot.vision.getDistanceToTarget());
-        SmartDashboard.putNumber("Vision theta", Robot.vision.getThetaToTarget());
+//        SmartDashboard.putNumber("Vision theta", Robot.vision.getThetaToTarget());
     }
 
     // Make this return true when this Command no longer needs to run execute()

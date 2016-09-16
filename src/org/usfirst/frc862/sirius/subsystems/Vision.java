@@ -23,12 +23,20 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Vision extends Subsystem {
     private ReadWriteLock rwl;
-    private double distance_to_target;
-    private double theta_to_target;
+    private double z;
+    private double x;
+    private long timestamp;
     
     private Thread vthread;
     private LinearInterpolator interplator;
     private DoubleLookupTable<ThetaDistanceTableValue> thetaDistanceTable;
+    
+    public long getTimestamp() {
+        rwl.readLock().lock();
+        long result = timestamp;
+        rwl.readLock().unlock();
+        return result;
+    }
     
     private static String httpGET(String urlToRead) {
         try {
@@ -56,8 +64,6 @@ public class Vision extends Subsystem {
     
     private static JSONObject httpJSON(String url) {
         String get = httpGET(url);
-        System.out.println("Vision get");
-        System.out.println(get);
         
         JSONArray ja = new JSONArray(get);
         if (ja.length() > 0) {
@@ -69,16 +75,25 @@ public class Vision extends Subsystem {
     
     public double getDistanceToTarget() {
         rwl.readLock().lock();
-        double result = distance_to_target;
+        double result = z;
         rwl.readLock().unlock();
         return result;
     }
     
     public double getThetaToTarget() {
+        final double FUDGE = 1;  //-3
+        
         rwl.readLock().lock();
-        double result = theta_to_target;
+        double lx = x;
+        double lz = z;
         rwl.readLock().unlock();
-        return result;
+        
+        System.out.println("x: " + lx);
+        System.out.println("z: " + lz);
+        double theta = (Math.atan2(lx, lz) * -360 / (2 * Math.PI)) + FUDGE;
+        System.out.println("theta: " + theta);
+        
+        return theta;
     }
     
     public double getInterpolatedPivot() {
@@ -113,7 +128,6 @@ public class Vision extends Subsystem {
             thetaDistanceTable.put(val.distance, val);
         }
 
-        System.out.println("Start vision");
         rwl = new ReentrantReadWriteLock();
         
         // create a thread here to poll against
@@ -128,13 +142,10 @@ public class Vision extends Subsystem {
                         JSONObject json = httpJSON("http://vision.local:5801/last_match_data");
 
                         if (json != null) {
-                            double z = json.getDouble("z");
-                            double x = json.getDouble("x");
-                            double theta = Math.atan2(x, z) * -360 / (2 * Math.PI);
-
                             rwl.writeLock().lock();
-                            distance_to_target = z;
-                            theta_to_target = theta;
+                            z = json.getDouble("z");
+                            x = json.getDouble("x");
+                            timestamp = json.getLong("timestamp");
                             rwl.writeLock().unlock();
                         }
                         
