@@ -38,7 +38,7 @@ public class PivottoHardstop extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
         setTimeout(Robot.configuration.hardstopResetTimeout);
-        Robot.pivot.setPower(0.15);
+        Robot.pivot.setPower(0.4);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -50,7 +50,7 @@ public class PivottoHardstop extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.pivot.atHardStop();
+        return Robot.pivot.atHardStop() || this.isTimedOut();
     }
 
     // Called once after isFinished returns true

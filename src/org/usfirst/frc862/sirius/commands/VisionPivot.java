@@ -8,5 +8,12 @@ public class VisionPivot extends PivotToAngle {
 
     protected void initialize() {
         this.m_angle = Robot.vision.getInterpolatedPivot();
+        System.out.println("VisionPivot: " + m_angle);
+        super.initialize();
     }
+    
+    protected boolean isFinished() {
+        return (m_angle == 0) || super.isFinished();
+}
+
 }

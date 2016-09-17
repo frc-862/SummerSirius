@@ -66,10 +66,11 @@ public class Configuration implements Serializable {
                 new ThetaDistanceTableValue(2.3, 34),
                 new ThetaDistanceTableValue(2.9, 28),
                 new ThetaDistanceTableValue(3.5, 25),
-                new ThetaDistanceTableValue(4.6, 22)
+                new ThetaDistanceTableValue(4.6, 22),
+                new ThetaDistanceTableValue(5.0, 23)
         };
         obstacleLightLevel = 0.25;
-        this.crossObstacleTimeout = 7.5;
+        this.crossObstacleTimeout = 5.0;
         this.timeToRaiseArm = 1.5;
         this.timeToLowerArm = 1.0;
         this.hardstopResetTimeout = 3;

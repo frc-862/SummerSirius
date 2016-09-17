@@ -7,10 +7,14 @@ public class LinearInterpolator implements Interpolator {
 
 	@Override
 	public double interpolate(double xLow, double xHigh, double xActual, double yLow, double yHigh) {
-		if (xActual > Math.max(xLow, xHigh) || xActual < Math.min(xLow, xHigh)) {
-		    System.out.printf("xLow %f xActual %f xHigh %f\n", xLow, xActual, xHigh);
-			throw new IllegalArgumentException("xActual must be between xLow and xHigh");
-		}
+	    if (xActual > Math.max(xLow, xHigh)) {
+            System.out.printf("xLow %f xActual %f xHigh %f\n", xLow, xActual, xHigh);
+	        xActual = Math.max(xLow, xHigh);
+	    }
+	    if (xActual < Math.min(xLow, xHigh)) {
+            System.out.printf("xLow %f xActual %f xHigh %f\n", xLow, xActual, xHigh);
+	        xActual = Math.min(xLow, xHigh);
+	    }
 		
 		double pct = getPercent(xLow, xHigh, xActual);
 		double distance = yHigh - yLow;

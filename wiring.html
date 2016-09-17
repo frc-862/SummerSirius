@@ -1,0 +1,82 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>Wiring</title>
+    <style type="text/css" media="screen">
+      table {
+          text-align: left;
+          width: 400px;
+
+          border-top: 2px solid black;
+          border-bottom: 2px solid black;
+          border-collapse:collapse;
+          border-spacing:0px;
+      }
+      th {
+          border-top: 2px solid black;
+          border-bottom: 2px solid black;
+      }
+      .pound {
+          width: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Wiring</h1>
+                    <h2>DIO</h2>
+	    <table><tr>
+	        <th class="pound">#</th>
+	        <th>Sensor</th></tr>
+	                                               <tr><td>0</td><td>Drive Train Left Encoder </td><td></td></tr>
+            	                                         <tr><td>1</td><td>Drive Train Left Encoder </td><td></td></tr>
+            	                                         <tr><td>2</td><td>Drive Train Right Encoder</td><td></td></tr>
+            	                                         <tr><td>3</td><td>Drive Train Right Encoder</td><td></td></tr>
+            	                                         <tr><td>4</td><td>Collector Beam Break</td><td></td></tr>
+            	                                         <tr><td>5</td><td>Shooter Beam Break</td><td></td></tr>
+            	                                         <tr><td>6</td><td>Pivot Hall Effect</td><td></td></tr>
+            	                                         <tr><td>7</td><td>Pivot Angle Encoder</td><td></td></tr>
+            	                                         <tr><td>8</td><td>Pivot Angle Encoder</td><td></td></tr>
+            	                                                                                                                                                                                                                 	    </table>
+                    <h2>PWMs</h2>
+	    <table><tr>
+	        <th class="pound">#</th>
+	        <th>Motor</th>
+                <th>Type</th></tr>
+	                                                                       <tr><td>2</td><td>Collector Intake</td><td>VictorSP</td></tr>
+            	                                         <tr><td>3</td><td>Pivot Angle Motor</td><td>VictorSP</td></tr>
+            	                                                                 <tr><td>6</td><td>Drive Train Right Motor 1</td><td>VictorSP</td></tr>
+            	                                         <tr><td>7</td><td>Drive Train Right Motor 2</td><td>VictorSP</td></tr>
+            	                                         <tr><td>8</td><td>Drive Train Left Motor 1</td><td>VictorSP</td></tr>
+            	                                         <tr><td>9</td><td>Drive Train Left Motor 2</td><td>VictorSP</td></tr>
+            	                                                                                                                                                                                                     	    </table>
+     
+                <h2>CAN IDs</h2>
+	<table><tr>
+	<th class="pound">ID</th>
+	<th>Device</th></tr>
+	                                                     <tr><td>1</td><td>Shooter Flywheel Right</td><td></td></tr>
+            	                                         <tr><td>2</td><td>Shooter Flywheel Left</td><td></td></tr>
+            	                                                                                                                                                                                                                                                                                         	</table>
+    
+            
+                    <h2>Analog Inputs</h2>
+	    <table><tr>
+	        <th class="pound">#</th>
+	        <th>Sensor</th></tr>
+	                                               <tr><td>0</td><td>Drive Train Front Ambient Light</td><td></td></tr>
+            	                                         <tr><td>1</td><td>Drive Train Back Ambient Light</td><td></td></tr>
+            	                                                                                                                                                                                                                                                                                                     	    </table>
+    
+                                                                                                                                                        <h2>PCM 11</h2>
+	    <table><tr>
+	        <th class="pound">#</th>
+	        <th>Solenoid</th></tr>
+	                                               <tr><td>0</td><td>Collector Arm Reverse </td><td></td></tr>
+            	                                         <tr><td>1</td><td>Collector Arm Forward </td><td></td></tr>
+            	                                         <tr><td>2</td><td>Shooter Kicker Forward </td><td></td></tr>
+            	                                         <tr><td>3</td><td>Shooter Kicker Reverse </td><td></td></tr>
+            	                                         <tr><td>4</td><td>Drive Train Shifter Reverse </td><td></td></tr>
+            	                                         <tr><td>5</td><td>Drive Train Shifter Forward </td><td></td></tr>
+            	                                                                                                                                                                                                                                                     	    </table>
+                                                                                                                
+          </body>
+</html>
