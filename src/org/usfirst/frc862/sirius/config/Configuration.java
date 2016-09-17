@@ -15,13 +15,24 @@ public class Configuration implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-	public PowerTableValue[] pivotPowerTable;
-	
-	public boolean debuggingPivot = false;
-
-    public PowerTableValue[] shooterTable;
-
+	public PowerTableValue[] pivotPowerTable;	
     public ThetaDistanceTableValue[] thetaDistanceTable;
+    public double obstacleLightLevel;
+    public double crossObstacleTimeout;
+    public double timeToRaiseArm;
+
+    public double timeToLowerArm;
+
+    public double hardstopResetTimeout;
+
+    public double rotateP;
+    public double rotateI;
+    public double rotateD;
+
+    public int rotateToleranceBuffer;
+    public double rotateTolerance;
+
+    public double nAutonSeconds;
 	
 	/**
 	 * Create a configuration with all state being zero or null
@@ -37,22 +48,37 @@ public class Configuration implements Serializable {
 	 */
 	public Configuration(boolean sensibleDefaults) {
 		if(sensibleDefaults) {
-			pivotPowerTable = new PowerTableValue[] {
-					new PowerTableValue(-180, -0.3, 0.25, 0.0),
-					new PowerTableValue(0, -0.3, 0.25, 0.0),
-					new PowerTableValue(10, -0.4, 0.25, -0.25),
-					new PowerTableValue(40, -0.6, 0.15, -0.3),
-					new PowerTableValue(180, -0.7, 0.15, -0.3)
-			};
-			
-			thetaDistanceTable = new ThetaDistanceTableValue[] {
-                    new ThetaDistanceTableValue(1.8, 42),
-                    new ThetaDistanceTableValue(2.3, 34),
-                    new ThetaDistanceTableValue(2.9, 28),
-                    new ThetaDistanceTableValue(3.5, 25),
-                    new ThetaDistanceTableValue(4.6, 22)
-			};
+		    setReasonableDefaults();
 		}
+	}
+	
+	public void setReasonableDefaults() {
+        pivotPowerTable = new PowerTableValue[] {
+                new PowerTableValue(-180, -0.3, 0.25, 0.0),
+                new PowerTableValue(0, -0.3, 0.25, 0.0),
+                new PowerTableValue(10, -0.4, 0.25, -0.25),
+                new PowerTableValue(40, -0.6, 0.15, -0.3),
+                new PowerTableValue(180, -0.7, 0.15, -0.3)
+        };
+        
+        thetaDistanceTable = new ThetaDistanceTableValue[] {
+                new ThetaDistanceTableValue(1.8, 42),
+                new ThetaDistanceTableValue(2.3, 34),
+                new ThetaDistanceTableValue(2.9, 28),
+                new ThetaDistanceTableValue(3.5, 25),
+                new ThetaDistanceTableValue(4.6, 22)
+        };
+        obstacleLightLevel = 0.25;
+        this.crossObstacleTimeout = 7.5;
+        this.timeToRaiseArm = 1.5;
+        this.timeToLowerArm = 1.0;
+        this.hardstopResetTimeout = 3;
+        this.rotateP = 0.2;
+        this.rotateI = 0;
+        this.rotateD = 0;
+        this.rotateToleranceBuffer = 3;
+        this.rotateTolerance = 1;
+        this.nAutonSeconds = 6.0;
 	}
 	
 	public static Configuration deserialize(File file) throws IOException {
