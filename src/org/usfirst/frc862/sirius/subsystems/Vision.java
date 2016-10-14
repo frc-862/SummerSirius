@@ -20,8 +20,10 @@ import org.usfirst.frc862.sirius.subsystems.Pivot.PowerTableValue;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -46,10 +48,14 @@ public class Vision extends Subsystem {
     
     public boolean hasGoodData() {
         double time = lastVisionTime();
+        boolean result = true;
         
-        if (time == 0) return false;
-        if (Timer.getFPGATimestamp() - lastread > 4) return false;
+        if (time == 0) 
+            result = false;
+        else if (Timer.getFPGATimestamp() - time > 4) 
+            result = false;
         
+        SmartDashboard.putBoolean("Vision Ready", result);
         return true;
     }
 
